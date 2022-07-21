@@ -81,3 +81,12 @@ def load_logger_in_user():
 def logout():
     session.clear()
     return redirect(url_for("index"))
+
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_wiew(**kwars):
+        if g.user is None:
+            return redirect(url_for("auth.login"))
+        return view(*kwars)
+    return wrapped_wiew
