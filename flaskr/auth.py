@@ -62,7 +62,7 @@ def login():
 
         flash(error)
 
-    return render_template("aurh/login.html")
+    return render_template("auth/login.html")
 
 
 @bp.before_app_first_request
