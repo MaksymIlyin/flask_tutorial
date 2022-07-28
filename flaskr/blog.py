@@ -47,7 +47,6 @@ def create():
 
 
 def get_post(id, check_author=True):
-    print("Id fom get_post ->", id)
     post = get_db().execute(
         "SELECT p.id, title, body, created, author_id, username"
         " FROM post p JOIN user u ON p.author_id = u.id"
@@ -64,10 +63,10 @@ def get_post(id, check_author=True):
     return post
 
 
-@login_required
+
 @bp.route('/<int:id>/update', methods=("GET", "POST"))
+@login_required
 def update(id):
-    print(id)
     post = get_post(id)
 
     if request.method == "POST":
@@ -93,8 +92,8 @@ def update(id):
     return render_template("blog/update.html", post=post)
 
 
-@login_required
 @bp.route("/<int:id>/delete", methods=("POST",))
+@login_required
 def delete(id):
     get_post(id)
     db = get_db()
