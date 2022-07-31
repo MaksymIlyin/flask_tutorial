@@ -20,7 +20,7 @@ def index():
     return render_template("blog/index.html", posts=posts)
 
 
-@bp.route("/create", methods=("GET", "POST"))
+@bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
     if request.method == "POST":
@@ -57,14 +57,20 @@ def get_post(id, check_author=True):
     if post is None:
         abort(404, f"Post id {id} doesn't exist.")
 
-    if check_author and post["author_id"] != g.user["id"]:
+    author_id = post["author_id"]
+    user_id = g.user["id"]
+    # try:
+    #     user_id = g.user["id"]
+    # except TypeError:
+    #     user_id = None
+
+    if check_author and author_id != user_id:
         abort(403)
 
     return post
 
 
-
-@bp.route('/<int:id>/update', methods=("GET", "POST"))
+@bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
     post = get_post(id)
