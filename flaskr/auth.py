@@ -88,5 +88,5 @@ def login_required(view):
     def wrapped_wiew(**kwars):
         if g.user is None:
             return redirect(url_for("auth.login"))
-        return view(*kwars)
+        return view(**kwars)
     return wrapped_wiew
